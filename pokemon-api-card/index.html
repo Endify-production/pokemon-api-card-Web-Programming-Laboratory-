@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Pokémon Card</title>
+
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+
+    <main class="app">
+
+
+        <!-- Header -->
+        <header class="header">
+            <p class="subtitle">POKÉDEX</p>
+            <h1>Pokémon Explorer</h1>
+            <p class="description">
+                Search for a Pokémon and discover its abilities, stats and information.
+            </p>
+        </header>
+
+
+
+
+        <!-- Search Section -->
+        <section class="search-section">
+
+
+            <form id="searchForm" class="search-form">
+
+
+                <label for="pokemonInput">
+                    Pokémon Name
+                </label>
+
+
+                <div class="search-box">
+                    <input
+                        type="text"
+                        id="pokemonInput"
+                        placeholder="Enter Pokémon name..."
+                        autocomplete="off"
+                    >
+
+                    <button type="submit">
+                        Search
+                    </button>
+                </div>
+
+            </form>
+
+
+
+
+            <!-- Quick Search -->
+            <div class="quick-search">
+
+
+                <span>Quick Search:</span>
+
+
+                <button type="button" class="quick-btn" data-pokemon="pikachu">
+                    Pikachu
+                </button>
+
+                <button type="button" class="quick-btn" data-pokemon="charizard">
+                    Charizard
+                </button>
+
+                <button type="button" class="quick-btn" data-pokemon="bulbasaur">
+                    Bulbasaur
+                </button>
+
+
+            </div>
+
+
+        </section>
+
+
+
+
+        <!-- Loading -->
+        <div id="loading" class="loading hidden">
+            <div class="loader"></div>
+            <p>Searching Pokémon...</p>
+        </div>
+
+
+
+
+        <!-- Error -->
+        <div id="errorMessage" class="error-message hidden">
+            <div class="error-icon">!</div>
+            <div>
+                <h3>Pokémon Not Found</h3>
+                <p id="errorText">
+                    Please enter a valid Pokémon name.
+                </p>
+            </div>
+        </div>
+
+
+
+
+        <!-- Pokémon Card -->
+        <section id="pokemonCard" class="pokemon-card hidden">
+
+
+            <!-- Card Header -->
+            <div class="card-top">
+
+
+                <div>
+                    <span class="card-label">POKÉMON</span>
+
+                    <h2 id="pokemonName">
+                        Pikachu
+                    </h2>
+                </div>
+
+                <span id="pokemonId" class="pokemon-id">
+                    #0025
+                </span>
+
+
+            </div>
+
+
+
+
+            <div class="card-body">
+
+
+                <!-- Artwork -->
+                <div class="artwork-container">
+
+
+                    <div class="artwork-glow"></div>
+
+                    <img
+                        id="pokemonImage"
+                        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png"
+                        alt="Pikachu"
+                    >
+
+
+                </div>
+
+
+
+
+                <!-- Attributes -->
+                <div class="card-details">
+
+
+                    <!-- Type -->
+                    <div id="pokemonTypes" class="types">
+
+
+                        <span class="type electric">
+                            ELECTRIC
+                        </span>
+
+
+                    </div>
+
+
+
+
+                    <!-- Basic Information -->
+                    <div class="basic-info">
+
+
+                        <div class="info-box">
+                            <span class="info-label">HEIGHT</span>
+                            <strong id="pokemonHeight">0.4 m</strong>
+                        </div>
+
+                        <div class="info-box">
+                            <span class="info-label">WEIGHT</span>
+                            <strong id="pokemonWeight">6.0 kg</strong>
+                        </div>
+
+
+                    </div>
+
+
+
+
+                    <!-- Abilities -->
+                    <div class="card-section">
+
+
+                        <div class="section-title">
+                            <span>ABILITIES</span>
+                        </div>
+
+                        <div id="abilities" class="abilities">
+
+
+                    <span class="ability">
+                        Static
+                    </span>
+
+                    <span class="ability">
+                        Lightning Rod
+                    </span>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+            <!-- Stats -->
+            <div class="card-section">
+
+
+                <div class="section-title">
+                    <span>BASE STATS</span>
+                </div>
+
+                <div class="stats">
+
+
+                    <div class="stat">
+                        <div class="stat-info">
+                            <span>HP</span>
+                            <strong id="hpValue">35</strong>
+                        </div>
+
+                        <div class="stat-bar">
+                            <div id="hpBar" class="stat-fill" style="width: 35%"></div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="stat">
+                        <div class="stat-info">
+                            <span>ATTACK</span>
+                            <strong id="attackValue">55</strong>
+                        </div>
+
+                        <div class="stat-bar">
+                            <div id="attackBar" class="stat-fill" style="width: 55%"></div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="stat">
+                        <div class="stat-info">
+                            <span>DEFENSE</span>
+                            <strong id="defenseValue">40</strong>
+                        </div>
+
+                        <div class="stat-bar">
+                            <div id="defenseBar" class="stat-fill" style="width: 40%"></div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="stat">
+                        <div class="stat-info">
+                            <span>SP. ATTACK</span>
+                            <strong id="specialAttackValue">50</strong>
+                        </div>
+
+                        <div class="stat-bar">
+                            <div id="specialAttackBar" class="stat-fill" style="width: 50%"></div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="stat">
+                        <div class="stat-info">
+                            <span>SP. DEFENSE</span>
+                            <strong id="specialDefenseValue">50</strong>
+                        </div>
+
+                        <div class="stat-bar">
+                            <div id="specialDefenseBar" class="stat-fill" style="width: 50%"></div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="stat">
+                        <div class="stat-info">
+                            <span>SPEED</span>
+                            <strong id="speedValue">90</strong>
+                        </div>
+
+                        <div class="stat-bar">
+                            <div id="speedBar" class="stat-fill" style="width: 90%"></div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+
+        <!-- Footer -->
+        <footer>
+            <p>
+                Powered by
+                <a href="https://pokeapi.co/" target="_blank">
+                    PokéAPI
+                </a>
+            </p>
+        </footer>
+
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+
+</body>
+</html>
