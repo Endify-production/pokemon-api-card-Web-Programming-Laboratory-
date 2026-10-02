@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>PokéSearch</title>
 
-    <title>Pokémon Card</title>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -14,334 +16,267 @@
 
 <body>
 
-
     <main class="app">
 
 
         <!-- Header -->
-        <header class="header">
-            <p class="subtitle">POKÉDEX</p>
-            <h1>Pokémon Explorer</h1>
-            <p class="description">
-                Search for a Pokémon and discover its abilities, stats and information.
-            </p>
-        </header>
+        <header class="topbar">
 
+            <svg class="topbar-watermark" viewBox="0 0 64 64">
+                <circle cx="32" cy="32" r="27" fill="none" stroke="#fff" stroke-width="7"/>
+                <path d="M5 32h54" stroke="#fff" stroke-width="7"/>
+                <circle cx="32" cy="32" r="10" fill="none" stroke="#fff" stroke-width="7"/>
+            </svg>
 
+            <div class="brand">
+                <svg class="brand-ball" viewBox="0 0 64 64">
+                    <circle cx="32" cy="32" r="29" fill="#fff"/>
+                    <path d="M3 32a29 29 0 0 1 58 0H3z" fill="#e85656"/>
+                    <rect x="3" y="28.5" width="58" height="7" fill="#20293f"/>
+                    <circle cx="32" cy="32" r="11" fill="#fff" stroke="#20293f" stroke-width="6"/>
+                </svg>
 
-
-        <!-- Search Section -->
-        <section class="search-section">
-
-
-            <form id="searchForm" class="search-form">
-
-
-                <label for="pokemonInput">
-                    Pokémon Name
-                </label>
-
-
-                <div class="search-box">
-                    <input
-                        type="text"
-                        id="pokemonInput"
-                        placeholder="Enter Pokémon name..."
-                        autocomplete="off"
-                    >
-
-                    <button type="submit">
-                        Search
-                    </button>
+                <div class="brand-text">
+                    <h1><strong>Poké</strong>Search</h1>
+                    <p>Find your favorite Pokémon</p>
                 </div>
-
-            </form>
-
-
-
-
-            <!-- Quick Search -->
-            <div class="quick-search">
-
-
-                <span>Quick Search:</span>
-
-
-                <button type="button" class="quick-btn" data-pokemon="pikachu">
-                    Pikachu
-                </button>
-
-                <button type="button" class="quick-btn" data-pokemon="charizard">
-                    Charizard
-                </button>
-
-                <button type="button" class="quick-btn" data-pokemon="bulbasaur">
-                    Bulbasaur
-                </button>
-
-
             </div>
 
 
-        </section>
+            <form id="searchForm" class="search-bar" autocomplete="off">
 
+                <div class="input-wrap">
+                    <svg class="search-icon" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <path d="m20 20-3.6-3.6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <input type="text" id="pokemonInput" placeholder="Find Pokémon by name">
+                </div>
 
+                <div class="select-wrap">
+                    <select id="searchMode">
+                        <option value="name">Name</option>
+                        <option value="id">Number</option>
+                    </select>
+                    <svg class="select-chevron" viewBox="0 0 24 24">
+                        <path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+
+                <button type="submit" class="go-btn">GO!</button>
+
+            </form>
+
+        </header>
 
 
         <!-- Loading -->
-        <div id="loading" class="loading hidden">
+        <div id="loading" class="status-card hidden">
             <div class="loader"></div>
             <p>Searching Pokémon...</p>
         </div>
 
 
-
-
         <!-- Error -->
-        <div id="errorMessage" class="error-message hidden">
-            <div class="error-icon">!</div>
+        <div id="errorMessage" class="status-card status-error hidden">
+            <span class="error-icon">!</span>
             <div>
                 <h3>Pokémon Not Found</h3>
-                <p id="errorText">
-                    Please enter a valid Pokémon name.
-                </p>
+                <p id="errorText">Please enter a valid Pokémon name.</p>
             </div>
         </div>
 
 
+        <!-- Pokémon card -->
+        <section id="pokemonCard" class="layout hidden">
 
 
-        <!-- Pokémon Card -->
-        <section id="pokemonCard" class="pokemon-card hidden">
+            <!-- Left card -->
+            <div class="hero-card">
 
+                <svg class="hero-watermark" viewBox="0 0 64 64">
+                    <circle cx="32" cy="32" r="27" fill="none" stroke="currentColor" stroke-width="7"/>
+                    <path d="M5 32h54" stroke="currentColor" stroke-width="7"/>
+                    <circle cx="32" cy="32" r="10" fill="none" stroke="currentColor" stroke-width="7"/>
+                </svg>
 
-            <!-- Card Header -->
-            <div class="card-top">
+                <div class="hero-head">
+                    <div>
+                        <h2 id="pokemonName">Clefairy</h2>
+                        <span id="pokemonId" class="pokemon-id">#0035</span>
+                    </div>
 
-
-                <div>
-                    <span class="card-label">POKÉMON</span>
-
-                    <h2 id="pokemonName">
-                        Pikachu
-                    </h2>
+                    <button id="favBtn" class="fav-btn" type="button" aria-label="Favorite">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 20.7S4.6 16 2.9 11.4A5.3 5.3 0 0 1 12 7.4a5.3 5.3 0 0 1 9.1 4c-1.7 4.6-9.1 9.3-9.1 9.3z"
+                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
                 </div>
 
-                <span id="pokemonId" class="pokemon-id">
-                    #0025
-                </span>
+                <div class="artwork">
+                    <div class="art-circle"></div>
+                    <img id="pokemonImage" src="" alt="Pokémon">
+                </div>
 
+                <div id="pokemonTypes" class="type-row"></div>
+
+                <div class="nav-row">
+                    <button id="prevBtn" class="nav-btn" type="button">
+                        <svg viewBox="0 0 24 24"><path d="m14 6-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Previous
+                    </button>
+
+                    <button id="detailsBtn" class="nav-btn nav-primary" type="button">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                            <path d="M14 3v5h5M9 13h6M9 17h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        Details
+                    </button>
+
+                    <button id="nextBtn" class="nav-btn" type="button">
+                        Next
+                        <svg viewBox="0 0 24 24"><path d="m10 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                </div>
 
             </div>
 
 
+            <!-- Right card -->
+            <div class="info-card">
 
 
-            <div class="card-body">
+                <!-- Stats -->
+                <section class="panel">
 
+                    <div class="panel-head">
+                        <svg class="panel-icon" viewBox="0 0 24 24">
+                            <rect x="4" y="12" width="4" height="8" rx="1.4" fill="currentColor"/>
+                            <rect x="10" y="7" width="4" height="13" rx="1.4" fill="currentColor"/>
+                            <rect x="16" y="3" width="4" height="17" rx="1.4" fill="currentColor"/>
+                        </svg>
+                        <span>Stats</span>
+                    </div>
 
-                <!-- Artwork -->
-                <div class="artwork-container">
+                    <div class="quick-stats">
 
+                        <div class="quick-item">
+                            <span class="quick-label">Height</span>
+                            <div class="quick-value">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M8 4v16M5 7l3-3 3 3M16 20V4M13 17l3 3 3-3"
+                                          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <strong id="pokemonHeight">0.6 m</strong>
+                            </div>
+                        </div>
 
-                    <div class="artwork-glow"></div>
+                        <div class="quick-item">
+                            <span class="quick-label">Weight</span>
+                            <div class="quick-value">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M6 8h12l1 12H5L6 8zM9 8V6a3 3 0 0 1 6 0v2"
+                                          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <strong id="pokemonWeight">7.5 kg</strong>
+                            </div>
+                        </div>
 
-                    <img
-                        id="pokemonImage"
-                        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png"
-                        alt="Pikachu"
-                    >
-
-
-                </div>
-
-
-
-
-                <!-- Attributes -->
-                <div class="card-details">
-
-
-                    <!-- Type -->
-                    <div id="pokemonTypes" class="types">
-
-
-                        <span class="type electric">
-                            ELECTRIC
-                        </span>
-
+                        <div class="quick-item">
+                            <span class="quick-label">Type</span>
+                            <div class="quick-value">
+                                <svg class="star-icon" viewBox="0 0 24 24">
+                                    <path d="m12 3 2.6 5.4 5.9.8-4.3 4.2 1 5.9L12 16.4 6.8 19.3l1-5.9L3.5 9.2l5.9-.8L12 3Z"
+                                          fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                                </svg>
+                                <span id="pokemonTypeQuick" class="type-badge small">Fairy</span>
+                            </div>
+                        </div>
 
                     </div>
 
+                    <div class="stats">
 
-
-
-                    <!-- Basic Information -->
-                    <div class="basic-info">
-
-
-                        <div class="info-box">
-                            <span class="info-label">HEIGHT</span>
-                            <strong id="pokemonHeight">0.4 m</strong>
+                        <div class="stat-row" data-stat="hp">
+                            <span class="stat-label">HP</span>
+                            <div class="stat-track"><div class="stat-fill hp"></div></div>
+                            <span class="stat-value">70</span>
                         </div>
 
-                        <div class="info-box">
-                            <span class="info-label">WEIGHT</span>
-                            <strong id="pokemonWeight">6.0 kg</strong>
+                        <div class="stat-row" data-stat="attack">
+                            <span class="stat-label">Attack</span>
+                            <div class="stat-track"><div class="stat-fill attack"></div></div>
+                            <span class="stat-value">45</span>
                         </div>
 
+                        <div class="stat-row" data-stat="defense">
+                            <span class="stat-label">Defense</span>
+                            <div class="stat-track"><div class="stat-fill defense"></div></div>
+                            <span class="stat-value">48</span>
+                        </div>
+
+                        <div class="stat-row" data-stat="special-attack">
+                            <span class="stat-label">Sp. Attack</span>
+                            <div class="stat-track"><div class="stat-fill special-attack"></div></div>
+                            <span class="stat-value">60</span>
+                        </div>
+
+                        <div class="stat-row" data-stat="special-defense">
+                            <span class="stat-label">Sp. Defense</span>
+                            <div class="stat-track"><div class="stat-fill special-defense"></div></div>
+                            <span class="stat-value">65</span>
+                        </div>
+
+                        <div class="stat-row" data-stat="speed">
+                            <span class="stat-label">Speed</span>
+                            <div class="stat-track"><div class="stat-fill speed"></div></div>
+                            <span class="stat-value">35</span>
+                        </div>
 
                     </div>
 
+                </section>
 
 
+                <!-- Abilities -->
+                <section class="panel">
 
-                    <!-- Abilities -->
-                    <div class="card-section">
+                    <div class="panel-head">
+                        <svg class="panel-icon" viewBox="0 0 24 24">
+                            <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" fill="currentColor"/>
+                        </svg>
+                        <span>Abilities</span>
+                    </div>
 
+                    <div id="abilities" class="chips">
+                        <span class="chip">Cute Charm</span>
+                        <span class="chip">Magic Guard</span>
+                    </div>
 
-                        <div class="section-title">
-                            <span>ABILITIES</span>
-                        </div>
-
-                        <div id="abilities" class="abilities">
-
-
-                    <span class="ability">
-                        Static
-                    </span>
-
-                    <span class="ability">
-                        Lightning Rod
-                    </span>
-
-
-                </div>
+                </section>
 
 
             </div>
-
-
-
-
-            <!-- Stats -->
-            <div class="card-section">
-
-
-                <div class="section-title">
-                    <span>BASE STATS</span>
-                </div>
-
-                <div class="stats">
-
-
-                    <div class="stat">
-                        <div class="stat-info">
-                            <span>HP</span>
-                            <strong id="hpValue">35</strong>
-                        </div>
-
-                        <div class="stat-bar">
-                            <div id="hpBar" class="stat-fill" style="width: 35%"></div>
-                        </div>
-                    </div>
-
-
-
-
-                    <div class="stat">
-                        <div class="stat-info">
-                            <span>ATTACK</span>
-                            <strong id="attackValue">55</strong>
-                        </div>
-
-                        <div class="stat-bar">
-                            <div id="attackBar" class="stat-fill" style="width: 55%"></div>
-                        </div>
-                    </div>
-
-
-
-
-                    <div class="stat">
-                        <div class="stat-info">
-                            <span>DEFENSE</span>
-                            <strong id="defenseValue">40</strong>
-                        </div>
-
-                        <div class="stat-bar">
-                            <div id="defenseBar" class="stat-fill" style="width: 40%"></div>
-                        </div>
-                    </div>
-
-
-
-
-                    <div class="stat">
-                        <div class="stat-info">
-                            <span>SP. ATTACK</span>
-                            <strong id="specialAttackValue">50</strong>
-                        </div>
-
-                        <div class="stat-bar">
-                            <div id="specialAttackBar" class="stat-fill" style="width: 50%"></div>
-                        </div>
-                    </div>
-
-
-
-
-                    <div class="stat">
-                        <div class="stat-info">
-                            <span>SP. DEFENSE</span>
-                            <strong id="specialDefenseValue">50</strong>
-                        </div>
-
-                        <div class="stat-bar">
-                            <div id="specialDefenseBar" class="stat-fill" style="width: 50%"></div>
-                        </div>
-                    </div>
-
-
-
-
-                    <div class="stat">
-                        <div class="stat-info">
-                            <span>SPEED</span>
-                            <strong id="speedValue">90</strong>
-                        </div>
-
-                        <div class="stat-bar">
-                            <div id="speedBar" class="stat-fill" style="width: 90%"></div>
-                        </div>
-                    </div>
-
-
-                </div>
-
-
-            </div>
-
-
-                </div>
-
-
-            </div>
-
 
         </section>
 
 
+        <!-- Random button -->
+        <div class="random-wrap">
+            <button id="randomBtn" class="random-btn" type="button">
+                <svg viewBox="0 0 24 24">
+                    <path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"
+                          fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Random Pokémon
+            </button>
+        </div>
 
 
-        <!-- Footer -->
         <footer>
-            <p>
-                Powered by
-                <a href="https://pokeapi.co/" target="_blank">
-                    PokéAPI
-                </a>
-            </p>
+            Powered by <a href="https://pokeapi.co/" target="_blank" rel="noopener">PokéAPI</a>
         </footer>
 
 
@@ -349,7 +284,6 @@
 
 
     <script src="script.js"></script>
-
 
 </body>
 </html>
