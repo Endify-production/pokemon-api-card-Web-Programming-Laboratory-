@@ -53,16 +53,6 @@
                     <input type="text" id="pokemonInput" placeholder="Find Pokémon by name">
                 </div>
 
-                <div class="select-wrap">
-                    <select id="searchMode">
-                        <option value="name">Name</option>
-                        <option value="id">Number</option>
-                    </select>
-                    <svg class="select-chevron" viewBox="0 0 24 24">
-                        <path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-
                 <button type="submit" class="go-btn">GO!</button>
 
             </form>
@@ -105,13 +95,6 @@
                         <h2 id="pokemonName">Clefairy</h2>
                         <span id="pokemonId" class="pokemon-id">#0035</span>
                     </div>
-
-                    <button id="favBtn" class="fav-btn" type="button" aria-label="Favorite">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 20.7S4.6 16 2.9 11.4A5.3 5.3 0 0 1 12 7.4a5.3 5.3 0 0 1 9.1 4c-1.7 4.6-9.1 9.3-9.1 9.3z"
-                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                        </svg>
-                    </button>
                 </div>
 
                 <div class="artwork">
@@ -120,26 +103,6 @@
                 </div>
 
                 <div id="pokemonTypes" class="type-row"></div>
-
-                <div class="nav-row">
-                    <button id="prevBtn" class="nav-btn" type="button">
-                        <svg viewBox="0 0 24 24"><path d="m14 6-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        Previous
-                    </button>
-
-                    <button id="detailsBtn" class="nav-btn nav-primary" type="button">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                            <path d="M14 3v5h5M9 13h6M9 17h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                        Details
-                    </button>
-
-                    <button id="nextBtn" class="nav-btn" type="button">
-                        Next
-                        <svg viewBox="0 0 24 24"><path d="m10 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </button>
-                </div>
 
             </div>
 
@@ -153,9 +116,7 @@
 
                     <div class="panel-head">
                         <svg class="panel-icon" viewBox="0 0 24 24">
-                            <rect x="4" y="12" width="4" height="8" rx="1.4" fill="currentColor"/>
-                            <rect x="10" y="7" width="4" height="13" rx="1.4" fill="currentColor"/>
-                            <rect x="16" y="3" width="4" height="17" rx="1.4" fill="currentColor"/>
+                            <path d="M4 20v-6M10 20V4M16 20v-9M2 20h20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         </svg>
                         <span>Stats</span>
                     </div>
@@ -263,20 +224,45 @@
         </section>
 
 
-        <!-- Random button -->
+        <!-- Button -->
         <div class="random-wrap">
-            <button id="randomBtn" class="random-btn" type="button">
+
+            <button id="allBtn" class="random-btn" type="button">
                 <svg viewBox="0 0 24 24">
-                    <path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"
-                          fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <rect x="3" y="3" width="7" height="7" rx="1.5" fill="currentColor"/>
+                    <rect x="14" y="3" width="7" height="7" rx="1.5" fill="currentColor"/>
+                    <rect x="3" y="14" width="7" height="7" rx="1.5" fill="currentColor"/>
+                    <rect x="14" y="14" width="7" height="7" rx="1.5" fill="currentColor"/>
                 </svg>
-                Random Pokémon
+                All Pokémon
             </button>
+
         </div>
+
+
+        <!-- All Pokémon grid -->
+        <section id="allSection" class="all-panel hidden">
+
+            <div class="panel-head">
+                <svg class="panel-icon" viewBox="0 0 24 24">
+                    <rect x="3" y="3" width="7" height="7" rx="1.5" fill="currentColor"/>
+                    <rect x="14" y="3" width="7" height="7" rx="1.5" fill="currentColor"/>
+                    <rect x="3" y="14" width="7" height="7" rx="1.5" fill="currentColor"/>
+                    <rect x="14" y="14" width="7" height="7" rx="1.5" fill="currentColor"/>
+                </svg>
+                <span>All Pokémon</span>
+            </div>
+
+            <div id="allGrid" class="all-grid"></div>
+
+        </section>
 
 
         <footer>
             Powered by <a href="https://pokeapi.co/" target="_blank" rel="noopener">PokéAPI</a>
+        </footer>
+        <footer>
+            Developed by <a>Abrar Fahim</a>
         </footer>
 
 

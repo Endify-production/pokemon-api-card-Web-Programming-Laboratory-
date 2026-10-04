@@ -2,7 +2,6 @@
 
 const searchForm = document.getElementById("searchForm");
 const pokemonInput = document.getElementById("pokemonInput");
-const searchMode = document.getElementById("searchMode");
 
 const pokemonCard = document.getElementById("pokemonCard");
 const loading = document.getElementById("loading");
@@ -18,13 +17,11 @@ const weightEl = document.getElementById("pokemonWeight");
 const typeQuickEl = document.getElementById("pokemonTypeQuick");
 const abilitiesEl = document.getElementById("abilities");
 
-const favBtn = document.getElementById("favBtn");
-const prevBtn = document.getElementById("prevBtn");
-const nextBtn = document.getElementById("nextBtn");
-const detailsBtn = document.getElementById("detailsBtn");
-const randomBtn = document.getElementById("randomBtn");
+const allBtn = document.getElementById("allBtn");
+const allSection = document.getElementById("allSection");
+const allGrid = document.getElementById("allGrid");
 
-let currentId = 1;
+let allLoaded = false;
 
 
 /* ==================== Body colors ==================== */
@@ -82,7 +79,7 @@ async function loadPokemon(query) {
 
     } catch (error) {
         errorText.textContent =
-            "We couldn't find that Pokémon. Please check the name or number.";
+            "We couldn't find that Pokémon. Please check the name and try again.";
         errorMessage.classList.remove("hidden");
 
     } finally {
@@ -92,8 +89,6 @@ async function loadPokemon(query) {
 
 
 function showPokemon(data) {
-    currentId = data.id;
-
     pokemonCard.classList.remove("hidden");
 
     nameEl.textContent = capitalize(data.name);
@@ -108,8 +103,6 @@ function showPokemon(data) {
     showTypes(data.types);
     showAbilities(data.abilities);
     showStats(data.stats);
-
-    favBtn.classList.remove("active");
 }
 
 
@@ -166,43 +159,66 @@ searchForm.addEventListener("submit", function (event) {
     const value = pokemonInput.value.trim();
 
     if (!value) {
-        errorText.textContent = "Please enter a Pokémon name or number.";
+        errorText.textContent = "Please enter a Pokémon name.";
         errorMessage.classList.remove("hidden");
         pokemonCard.classList.add("hidden");
         loading.classList.add("hidden");
         return;
     }
 
-    const query = searchMode.value === "name" ? value.toLowerCase() : value;
-    loadPokemon(query);
+    loadPokemon(value.toLowerCase());
 });
 
 
-prevBtn.addEventListener("click", function () {
-    if (currentId > 1) loadPokemon(currentId - 1);
+/* Show a grid with every Pokémon card */
+allBtn.addEventListener("click", function () {
+    allSection.classList.toggle("hidden");
+
+    if (allLoaded) return;
+
+    loadAllPokemon();
 });
 
 
-nextBtn.addEventListener("click", function () {
-    if (currentId < 1025) loadPokemon(currentId + 1);
-});
+async function loadAllPokemon() {
+    allGrid.innerHTML = "<p>Loading...</p>";
+
+    try {
+        const url = "https://pokeapi.co/api/v2/pokemon?limit=1025";
+        const response = await fetch(url);
+        const data = await response.json();
+
+        let html = "";
+
+        data.results.forEach(function (item) {
+            const id = Number(item.url.split("/").filter(Boolean).pop());
+            const number = String(id).padStart(4, "0");
+
+            html += `
+                <button class="poke-mini" data-id="${id}">
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png"
+                         alt="${item.name}" loading="lazy">
+                    <span>${titleCase(item.name)}</span>
+                    <small>#${number}</small>
+                </button>`;
+        });
+
+        allGrid.innerHTML = html;
+        allLoaded = true;
+
+    } catch (error) {
+        allGrid.innerHTML = "<p>Could not load the Pokémon list.</p>";
+    }
+}
 
 
-randomBtn.addEventListener("click", function () {
-    const randomId = Math.floor(Math.random() * 1025) + 1;
-    pokemonInput.value = randomId;
-    loadPokemon(randomId);
-});
+/* Click a card in the grid to open it */
+allGrid.addEventListener("click", function (event) {
+    const card = event.target.closest(".poke-mini");
+    if (!card) return;
 
-
-detailsBtn.addEventListener("click", function () {
-    const url = "https://pokemondb.net/pokemon/" + nameEl.textContent.toLowerCase();
-    window.open(url, "_blank");
-});
-
-
-favBtn.addEventListener("click", function () {
-    favBtn.classList.toggle("active");
+    loadPokemon(card.dataset.id);
+    window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
 

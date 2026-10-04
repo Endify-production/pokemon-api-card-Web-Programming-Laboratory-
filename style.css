@@ -56,14 +56,17 @@ button {
 }
 
 
+
+
+
 .topbar-watermark {
     position: absolute;
-    right: -50px;
-    top: -46px;
-    width: 250px;
-    height: 250px;
+    right: -34px;
+    top: -40px;
+    width: 165px;
+    height: 165px;
     opacity: 0.16;
-    transform: rotate(-18deg);
+    pointer-events: none;
 }
 
 
@@ -150,38 +153,6 @@ button {
 
 .input-wrap input::placeholder {
     color: #a8abbb;
-}
-
-
-.select-wrap {
-    position: relative;
-    flex-shrink: 0;
-}
-
-
-.select-wrap select {
-    appearance: none;
-    border: none;
-    outline: none;
-    background: #fff;
-    border-radius: 999px;
-    padding: 15px 44px 15px 22px;
-    font-size: 15px;
-    font-family: inherit;
-    font-weight: 700;
-    color: var(--navy);
-    cursor: pointer;
-}
-
-
-.select-chevron {
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    width: 18px;
-    height: 18px;
-    transform: translateY(-50%);
-    pointer-events: none;
 }
 
 
@@ -293,6 +264,19 @@ button {
 }
 
 
+.hero-watermark {
+    position: absolute;
+    right: -38px;
+    bottom: -38px;
+    width: 175px;
+    height: 175px;
+    opacity: 0.12;
+    color: color-mix(in srgb, var(--main) 60%, #20293f);
+    transform: rotate(18deg);
+    pointer-events: none;
+}
+
+
 .hero-card {
     display: flex;
     flex-direction: column;
@@ -301,15 +285,7 @@ button {
 
 /* ==================== Left card ==================== */
 
-.hero-watermark {
-    position: absolute;
-    right: -70px;
-    bottom: -60px;
-    width: 300px;
-    height: 300px;
-    color: var(--navy);
-    opacity: 0.045;
-}
+
 
 
 .hero-head {
@@ -338,31 +314,6 @@ button {
     font-size: 17px;
     font-weight: 700;
     letter-spacing: 1px;
-}
-
-
-.fav-btn {
-    width: 52px;
-    height: 52px;
-    display: grid;
-    place-items: center;
-    border: none;
-    border-radius: 50%;
-    background: #fff;
-    color: var(--main);
-    cursor: pointer;
-    box-shadow: 0 8px 20px rgba(30, 42, 72, 0.12);
-}
-
-
-.fav-btn svg {
-    width: 26px;
-    height: 26px;
-}
-
-
-.fav-btn.active svg path {
-    fill: var(--main);
 }
 
 
@@ -457,57 +408,6 @@ button {
 .type-dark     { background: #e4e0dd; color: #6a5548; }
 .type-steel    { background: #e6e8ec; color: #79808c; }
 .type-fairy    { background: #fbe1ec; color: #c75d94; }
-
-
-.nav-row {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: 1fr 1.4fr 1fr;
-    gap: 12px;
-    margin-top: auto;
-}
-
-
-.nav-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-    border: 1.5px solid #e7e7ee;
-    background: #fff;
-    color: var(--navy);
-    border-radius: 14px;
-    padding: 14px 10px;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-
-.nav-btn svg {
-    width: 17px;
-    height: 17px;
-}
-
-
-.nav-btn:hover {
-    background: #f7f7fa;
-}
-
-
-.nav-primary {
-    background: var(--main);
-    border-color: var(--main);
-    color: #fff;
-    box-shadow: 0 10px 22px color-mix(in srgb, var(--main) 35%, transparent);
-}
-
-
-.nav-primary:hover {
-    background: var(--main);
-    filter: brightness(0.92);
-}
 
 
 /* ==================== Right card ==================== */
@@ -670,7 +570,9 @@ button {
 
 .random-wrap {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+    gap: 14px;
     margin-top: 26px;
 }
 
@@ -679,16 +581,16 @@ button {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    border: none;
-    background: var(--main);
-    color: #fff;
+    border: 2px solid var(--main);
+    background: #fff;
+    color: var(--main);
     border-radius: 15px;
     padding: 16px 30px;
     font-size: 16.5px;
     font-weight: 800;
     font-family: inherit;
     cursor: pointer;
-    box-shadow: 0 12px 26px color-mix(in srgb, var(--main) 35%, transparent);
+    transition: background 0.15s ease;
 }
 
 
@@ -699,7 +601,69 @@ button {
 
 
 .random-btn:hover {
-    filter: brightness(0.92);
+    background: color-mix(in srgb, var(--main) 10%, white);
+}
+
+
+/* ==================== All Pokémon grid ==================== */
+
+.all-panel {
+    background: #fff;
+    border-radius: 24px;
+    padding: 28px;
+    margin-top: 22px;
+    box-shadow: 0 10px 30px rgba(30, 42, 72, 0.07);
+}
+
+
+.all-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+
+.poke-mini {
+    background: #fff;
+    border: 1.5px solid #ececf2;
+    border-radius: 16px;
+    padding: 12px 8px;
+    text-align: center;
+    cursor: pointer;
+    font-family: inherit;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+
+.poke-mini:hover {
+    border-color: var(--main);
+    transform: translateY(-3px);
+}
+
+
+.poke-mini img {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+}
+
+
+.poke-mini span {
+    display: block;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--navy);
+    text-transform: capitalize;
+}
+
+
+.poke-mini small {
+    font-size: 12px;
+    font-weight: 700;
+    color: #a3a7b8;
 }
 
 
@@ -750,16 +714,9 @@ footer a {
         flex: 1 1 100%;
     }
 
-    .select-wrap {
-        flex: 1;
-    }
-
-    .select-wrap select {
-        width: 100%;
-    }
-
     .hero-card,
-    .info-card {
+    .info-card,
+    .all-panel {
         padding: 22px 18px;
     }
 
@@ -779,10 +736,6 @@ footer a {
     .art-circle {
         width: 240px;
         height: 240px;
-    }
-
-    .nav-row {
-        grid-template-columns: 1fr;
     }
 
     .stat-row {
